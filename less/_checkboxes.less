@@ -46,7 +46,8 @@
       display: inline-block;
       width: @mdb-checkbox-size;
       height: @mdb-checkbox-size;
-      border: @border-radius-base solid @mdb-checkbox-border-color;
+      border: 2px solid @mdb-checkbox-border-color;
+      border-radius: 2px;
       overflow: hidden;
       z-index: 1;
     }
@@ -71,51 +72,33 @@
     }
   }
 
-  input[type=checkbox] {
+  input[type=checkbox]:focus + .checkbox-material .check:after {
+    opacity: 0.2;
+  }
+  input[type=checkbox]:checked + .checkbox-material .check:before {
+    box-shadow:
+      0 0 0 10px,
+      10px -10px 0 10px,
+      32px 0px 0 20px,
+      0px 32px 0 20px,
+      -5px 5px 0 10px,
+      20px -12px 0 11px;
+    animation: checkbox-on @mdb-checkbox-animation-check forwards;
+  }
 
-    &:focus + .checkbox-material .check:after {
-      opacity: 0.2;
-    }
+  input[type=checkbox]:not(:checked) + .checkbox-material:before {
+    animation: rippleOff @mdb-checkbox-animation-ripple;
+  }
+  input[type=checkbox]:checked + .checkbox-material:before {
+    animation: rippleOn @mdb-checkbox-animation-ripple;
+  }
 
-    &:checked {
-
-      // FIXME: once working - combine further to reduce code
-      & + .checkbox-material .check {
-        color: @mdb-checkbox-checked-color;
-        border-color: @mdb-checkbox-checked-color;
-      }
-
-      & + .checkbox-material .check:before {
-        color: @mdb-checkbox-checked-color;
-        box-shadow: 0 0 0 10px,
-          10px -10px 0 10px,
-        32px 0 0 20px,
-        0px 32px 0 20px,
-        -5px 5px 0 10px,
-          20px -12px 0 11px;
-        animation: checkbox-on @mdb-checkbox-animation-check forwards;
-      }
-
-      & + .checkbox-material:before {
-        animation: rippleOn @mdb-checkbox-animation-ripple;
-      }
-
-      & + .checkbox-material .check:after {
-        //background-color: @brand-success; // FIXME: seems like tho wrong color, test and make sure it can be removed
-        animation: rippleOn @mdb-checkbox-animation-ripple forwards; // Ripple effect on check
-      }
-    }
-
-    &:not(:checked) {
-      & + .checkbox-material:before {
-        animation: rippleOff @mdb-checkbox-animation-ripple;
-      }
-
-      & + .checkbox-material .check:after {
-        animation: rippleOff @mdb-checkbox-animation-ripple forwards; // Ripple effect on uncheck
-
-      }
-    }
+  // Ripple effect on click
+  input[type=checkbox]:not(:checked) + .checkbox-material .check:after {
+    animation: rippleOff @mdb-checkbox-animation-ripple forwards;
+  }
+  input[type=checkbox]:checked + .checkbox-material .check:after {
+    animation: rippleOn @mdb-checkbox-animation-ripple forwards;
   }
 
   // Style for disabled inputs
@@ -127,9 +110,14 @@
     opacity: 0.5;
   }
   input[type=checkbox][disabled] + .checkbox-material .check:after {
-    background-color: @mdb-text-color-primary;
+    background-color: @lightbg-text;
     transform: rotate(-45deg);
   }
+
+  .variations(~" input[type=checkbox]:checked + .checkbox-material .check:after", background-color, @brand-success);
+  .variations(~" input[type=checkbox]:checked + .checkbox-material .check:before", color, @mdb-checkbox-checked-color);
+  .variations(~" input[type=checkbox]:checked + .checkbox-material .check", color, @mdb-checkbox-checked-color);
+  .variations(~" input[type=checkbox]:checked + .checkbox-material .check", border-color, @mdb-checkbox-checked-color);
 }
 
 @keyframes checkbox-on {
@@ -137,7 +125,7 @@
     box-shadow:
       0 0 0 10px,
       10px -10px 0 10px,
-      32px 0 0 20px,
+      32px 0px 0 20px,
       0px 32px 0 20px,
       -5px 5px 0 10px,
       15px 2px 0 11px;
@@ -146,7 +134,7 @@
     box-shadow:
       0 0 0 10px,
       10px -10px 0 10px,
-      32px 0 0 20px,
+      32px 0px 0 20px,
       0px 32px 0 20px,
       -5px 5px 0 10px,
       20px 2px 0 11px;
@@ -155,7 +143,7 @@
     box-shadow:
       0 0 0 10px,
       10px -10px 0 10px,
-      32px 0 0 20px,
+      32px 0px 0 20px,
       0px 32px 0 20px,
       -5px 5px 0 10px,
       20px -12px 0 11px;
@@ -166,7 +154,7 @@
     box-shadow:
       0 0 0 10px,
       10px -10px 0 10px,
-      32px 0 0 20px,
+      32px 0px 0 20px,
       0px 32px 0 20px,
       -5px 5px 0 10px,
       20px -12px 0 11px,
@@ -177,7 +165,7 @@
     box-shadow:
       0 0 0 10px,
       10px -10px 0 10px,
-      32px 0 0 20px,
+      32px 0px 0 20px,
       0px 32px 0 20px,
       -5px 5px 0 10px,
       20px -12px 0 11px,
@@ -187,12 +175,12 @@
     transform: rotate(45deg);
     margin-top: -4px;
     margin-left: 6px;
-    width: 0;
-    height: 0;
+    width: 0px;
+    height: 0px;
     box-shadow:
       0 0 0 10px,
       10px -10px 0 10px,
-      32px 0 0 20px,
+      32px 0px 0 20px,
       0px 32px 0 20px,
       -5px 5px 0 10px,
       15px 2px 0 11px,
@@ -211,7 +199,7 @@
       0 0 0 0,
       0 0 0 0,
       0 0 0 0,
-      0px 0 0 10px inset;
+      0px 0px 0 10px inset;
   }
   100% {
     transform: rotate(0deg);
@@ -226,7 +214,7 @@
       0 0 0 0,
       0 0 0 0,
       0 0 0 0,
-      0px 0 0 0 inset;
+      0px 0px 0 0px inset;
   }
 }
 @keyframes rippleOn {
