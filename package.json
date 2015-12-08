@@ -1,6 +1,6 @@
 {
   "name": "bootstrap-material-design",
-  "version": "0.5.21",
+  "version": "0.5.22",
   "description": "Material Design for Bootstrap 3",
   "main": "scripts/index.js",
   "scripts": {
@@ -26,8 +26,7 @@
     "framework"
   ],
   "dependencies": {
-    "bootstrap": ">=3.3.0",
-    "jquery": ">=1.9.1"
+    "bootstrap": ">=3.3.5"
   },
   "devDependencies": {
   }
